@@ -2,6 +2,7 @@ import pygame
 import sys
 import constants
 from scripts.entities import entities
+from scripts.camera import Camera
 from scripts.utils import load_img
 
 class Game:
@@ -26,17 +27,19 @@ class Game:
         self.bg = pygame.image.load("data/images/bg.png").convert()
         self.bg = pygame.transform.scale(self.bg, (self.bg.get_width()*constants.SCREEN_HEIGHT/self.bg.get_height(), constants.SCREEN_HEIGHT))
 
+        # Init camera
+        self.cam = Camera(self, 0, self.bg.get_width()-constants.SCREEN_WIDTH)
+
         # Init movement
         self.mvmt = [False, False]
 
         # Init player
-        self.player = entities(self, 'player', (50, 50), (50, 75))
+        self.player = entities(self, 'player', 0, self.bg.get_width()-constants.SCREEN_WIDTH, (0, constants.SCREEN_HEIGHT/2), (50, 75))
         self.assets = {
             'player': load_img('entities/player/player.png')
         }        
         
         # Init variables
-        self.running = True # Is game still running
         self.dt = 0  # Time between frames in seconds, unset
         self.debug = True # Variable for debug
     
@@ -52,11 +55,13 @@ class Game:
             # Reset screen after every frame
             self.screen.fill((30, 182, 248))
 
-            # Put background
-            self.screen.blit(self.bg, (0, 0))
-
             # Update player position
             self.player.update((((self.mvmt[1] - self.mvmt[0])*constants.PLAYER_VELOCITY*self.dt), 0))
+
+            # Put background
+            self.cam.scroll(self.screen, self.bg, self.player.get_pos())
+
+            # Render player model
             self.player.render(self.screen)
 
             # Check for inputs
