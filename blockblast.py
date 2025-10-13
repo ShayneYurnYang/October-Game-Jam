@@ -8,8 +8,6 @@ arr = [[0,0,0,0,0],
        [0,0,0,0,0],
        [0,0,0,0,0]]
 
-arr[0][1]=1
-
 screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 
@@ -43,6 +41,12 @@ def draw_grid(arr):
             y+=1
         x+=1
 
+def reverse_tile(arr,x,y):
+    if (arr[x][y]==1):
+        arr[x][y]=0
+    else:
+        arr[x][y]=1
+
 
 
 tile_x,tile_y=(0,0)
@@ -66,11 +70,28 @@ while running:
             if (mouse_x>screen.get_width()/2-window_size/2 and mouse_x<screen.get_width()/2+window_size/2 and mouse_y>screen.get_height()/2-window_size/2 and mouse_y<screen.get_height()/2+window_size/2):
                 tile_x=int((mouse_x-(390/10)) // (390/5)-2)
                 tile_y=int((mouse_y-(390/10)) / (390/5))
-                if (tile_x>=0 and tile_x<=4 and tile_y>=0 and tile_y<=4):
-                    if (arr[tile_x][tile_y]==1):
-                        arr[tile_x][tile_y]=0
+                if (0<=tile_x and tile_x<=4 and 0<=tile_y and tile_y<=4):
+                    if (1<=tile_x and tile_x<=3 and 1<=tile_y and tile_y<=3):
+                        reverse_tile(arr,tile_x+1,tile_y)
+                        reverse_tile(arr,tile_x,tile_y+1)
+                        reverse_tile(arr,tile_x-1,tile_y)
+                        reverse_tile(arr,tile_x,tile_y-1)
+                        reverse_tile(arr,tile_x,tile_y)
                     else:
-                        arr[tile_x][tile_y]=1
+                        reverse_tile(arr,tile_x,tile_y)
+                        if (tile_x+1>4):
+                            reverse_tile(arr,0,tile_y)
+                        else:
+                            reverse_tile(arr,tile_x+1,tile_y)
+                        if (tile_y+1>4):
+                            reverse_tile(arr,tile_x,0)
+                        else:
+                            reverse_tile(arr,tile_x,tile_y+1)
+                        reverse_tile(arr,tile_x-1,tile_y)
+                        reverse_tile(arr,tile_x,tile_y-1)
+
+
+
 
 
         #key pressed
