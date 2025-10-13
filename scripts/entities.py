@@ -21,4 +21,4 @@ class entities:
 
 
     def render(self, surface):
-        surface.blit(self.game.assets['player'], self.pos)
+        surface.blit(pygame.transform.scale(self.game.assets['player'], self.size), self.pos)

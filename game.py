@@ -31,7 +31,7 @@ class Game:
         self.mvmt = [False, False]
 
         # Init player
-        self.player = entities(self, 'player', (200, 120), (100, 100))
+        self.player = entities(self, 'player', (200, 120), (40, 60))
         self.assets = {
             'player': load_img('entities/player/player.png')
         }        
@@ -54,7 +54,7 @@ class Game:
             self.screen.blit(self.bg, (0, 0))
 
             # Update player position
-            self.player.update(((self.mvmt[1] - self.mvmt[0]), 0))
+            self.player.update((((self.mvmt[1] - self.mvmt[0])*constants.PLAYER_VELOCITY*self.dt), 0))
             self.player.render(self.screen)
 
             # Check for inputs
