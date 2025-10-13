@@ -32,7 +32,6 @@ class Text:
         self.start = 0
         self.counter = 0
         self.row = 0
-        self.length = 0
         self.lineHeight = 20
         self.keyPress = True
         
@@ -40,8 +39,6 @@ class Text:
         split = msg.split("\n")
         self.msg.append((split, time, name))
         self.printmsg=[" "]*len(self.msg[0][0])
-        for i in self.msg[0][0]:
-            self.length += len(i)
 
             
     
@@ -57,7 +54,7 @@ class Text:
             screen.blit(pygame.font.SysFont("arial", 20).render(self.msg[0][2], False, (0, 0, 0)), (constants.SCREEN_WIDTH/8+8, constants.SCREEN_HEIGHT/2+2))
             
 
-            if self.start >= self.msg[0][1]/self.length and self.printmsg != self.msg[0][0]:
+            if self.start >= self.msg[0][1] and self.printmsg != self.msg[0][0]:
                     self.printmsg[self.row]=(self.msg[0][0][self.row][:self.counter])
                     if self.counter != len(self.msg[0][0][self.row]):
                         self.counter += 1
@@ -67,13 +64,15 @@ class Text:
                     self.start = 0
                 
             if keys[pygame.K_RETURN] and self.keyPress:
-                self.msg.pop(0)
-                if len(self.msg) != 0:
-                    self.printmsg=[" "]*len(self.msg[0][0])
-                self.counter = 0
-                self.row = 0
+                if self.printmsg != self.msg[0][0]:
+                    self.printmsg = self.msg[0][0].copy()
+                else:
+                    self.msg.pop(0)
+                    if len(self.msg) != 0:
+                        self.printmsg=[" "]*len(self.msg[0][0])
+                    self.counter = 0
+                    self.row = 0
                 self.keyPress = False
-                
             if not keys[pygame.K_RETURN] and self.keyPress == False:
                 self.keyPress = True
 gg = True
@@ -137,11 +136,11 @@ while running:
         # print(str(player_pos.x)+", "+str((bg.get_width()-constants.SCREEN_WIDTH/2)))
         # print(dt)
         if gg:
-            text.print("hello guys made some very minor updates", 2, "person 1")
-            text.print("but it can support multiple lines now", 2, "person 2")
-            text.print("which it could not do before \n \nfor some reason", 2, "person 1")
-            text.print("still ugly though", 2, "person 2")
-            text.print("what else should i change apart from the font", 2)
+            text.print("hello guys made some very minor updates", .05, "person 1")
+            text.print("but it can support multiple lines now", .05, "person 2")
+            text.print("which it could not do before \n \nfor some reason", .05, "person 1")
+            text.print("still ugly though", .05, "person 2")
+            text.print("what else should i change apart from the font", .05)
             gg=False
         # print(dt)
     
