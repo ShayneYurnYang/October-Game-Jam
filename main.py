@@ -29,6 +29,10 @@ while running:
     dt = clock.tick(constants.FPS) / 1000
     dt = max(0.001,min(0.1,dt))
 
+    # flip() the display to put your work on screen
+    pygame.display.flip()
+
+
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
     screen.fill("black")
@@ -76,8 +80,6 @@ while running:
     if debug:
         print(str(player_pos.x)+", "+str((bg.get_width()-constants.SCREEN_WIDTH/2)))
     
-    # flip() the display to put your work on screen
-    pygame.display.flip()
 
 #clean up program
 pygame.quit()
