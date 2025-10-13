@@ -19,6 +19,5 @@ class entities:
         self.pos[0] += frame_mvmt[0]
         self.pos[1] += frame_mvmt[1]
 
-
     def render(self, surface):
         surface.blit(pygame.transform.scale(self.game.assets['player'], self.size), self.pos)
