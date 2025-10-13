@@ -13,8 +13,6 @@ clock = pygame.time.Clock()
 
 debug = True
 running = True
-move_right = False
-move_left = False
 dt = 0
 
 smallest_side = min(screen.get_height(),screen.get_width())
