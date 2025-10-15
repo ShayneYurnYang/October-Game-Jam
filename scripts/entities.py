@@ -1,7 +1,7 @@
 import pygame
 import constants
 
-class entities:
+class Entities:
     def __init__(self, game, type, left_bound, right_bound, pos, size):
         # Initialization
         self.game = game

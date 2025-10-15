@@ -1,9 +1,11 @@
 import pygame
 import sys
 import constants
-from scripts.entities import entities
+from scripts.entities import Entities
 from scripts.camera import Camera
+from scripts.text import Text
 from scripts.utils import load_img
+
 
 class Game:
     def __init__(self):
@@ -34,10 +36,13 @@ class Game:
         self.mvmt = [False, False]
 
         # Init player
-        self.player = entities(self, 'player', 0, self.bg.get_width()-constants.SCREEN_WIDTH, (0, constants.SCREEN_HEIGHT/2), (50, 75))
+        self.player = Entities(self, 'player', 0, self.bg.get_width()-constants.SCREEN_WIDTH, (0, constants.SCREEN_HEIGHT/2), (50, 75))
         self.assets = {
             'player': load_img('entities/player/player.png')
         }        
+
+        # Init text
+        self.text = Text()
         
         # Init variables
         self.dt = 0  # Time between frames in seconds, unset
@@ -45,9 +50,13 @@ class Game:
     
     def run(self):
         while True:
+            # Check for inputs
+            
+
             # Set dt
             self.dt = self.clock.tick(constants.FPS) / 1000
             self.dt = max(0.001,min(0.1, self.dt))
+            keys = pygame.key.get_pressed()
 
             # Flip to display new screen
             pygame.display.flip()
@@ -64,26 +73,45 @@ class Game:
             # Render player model
             self.player.render(self.screen)
 
-            # Check for inputs
+            # Update text
+            self.text.update(keys, self.dt)
+
+            # Render text
+            self.text.render(self.screen)
+
+            # toggles movement 
+            if keys[pygame.K_a]:
+                self.mvmt[0] = True
+            else:
+                self.mvmt[0] = False
+
+            if keys[pygame.K_d]:
+                self.mvmt[1] = True
+            else:
+                self.mvmt[1] = False
+
+            # text test
+            if keys[pygame.K_l]:
+                self.text.print("Hello bro")
+
             for event in pygame.event.get():
                 
                 # Check if exit (X) button pressed
                 if (event.type == pygame.QUIT):
                     pygame.quit()
                     sys.exit()
+                # # Check keys pressed
+                # if (event.type == pygame.KEYDOWN):
+                #     # Check movement
+                #     if (event.key == pygame.K_a):
+                #         self.mvmt[0] = True
+                #     if (event.key == pygame.K_d):
+                #         self.mvmt[1] = True
 
-                # Check keys pressed
-                if (event.type == pygame.KEYDOWN):
-                    # Check movement
-                    if (event.key == pygame.K_a):
-                        self.mvmt[0] = True
-                    if (event.key == pygame.K_d):
-                        self.mvmt[1] = True
-
-                # Check keys released
-                if event.type == pygame.KEYUP:
-                    # Check movement
-                    if (event.key == pygame.K_a):
-                        self.mvmt[0] = False
-                    if (event.key == pygame.K_d):
-                        self.mvmt[1] = False
+                # # Check keys released
+                # if event.type == pygame.KEYUP:
+                #     # Check movement
+                #     if (event.key == pygame.K_a):
+                #         self.mvmt[0] = False
+                #     if (event.key == pygame.K_d):
+                #         self.mvmt[1] = False
