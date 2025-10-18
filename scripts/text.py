@@ -2,7 +2,7 @@ import pygame
 import constants
 
 class Text:
-    def __init__(self):
+    def __init__(self, vf):
         self.msg = []
         self.printmsg = []
         self.start = 0
@@ -10,11 +10,11 @@ class Text:
         self.row = 0
         self.lineHeight = 20
         self.keyPress = True
+        self.vf = vf
 
-        
-    def print(self, msg, time=0.1, name = ""):
+    def print(self, msg, time=0.1, name = "", vf = None):
         split = msg.split("\n")
-        self.msg.append((split, time, name))
+        self.msg.append((split, time, name, vf if vf != None else self.vf))
         self.printmsg=[" "]*len(self.msg[0][0])
         self.start = 0
         self.counter = 0
@@ -26,6 +26,7 @@ class Text:
             
             if self.start >= self.msg[0][1] and self.printmsg != self.msg[0][0]:
                     self.printmsg[self.row]=(self.msg[0][0][self.row][:self.counter])
+                    self.msg[0][3].play()
                     if self.counter != len(self.msg[0][0][self.row]):
                         self.counter += 1
                     else:

@@ -29,6 +29,9 @@ class Game:
         #import and scale background image
         self.bg = pygame.image.load("data/images/bg.png").convert()
         self.bg = pygame.transform.scale(self.bg, (self.bg.get_width()*constants.SCREEN_HEIGHT/self.bg.get_height(), constants.SCREEN_HEIGHT))
+        
+        # Init voicefont
+        self.vf = pygame.mixer.Sound("sfx/tempvoicefont.wav")
 
         # Init camera
         self.cam = Camera(self, 0, self.bg.get_width()-constants.SCREEN_WIDTH)
@@ -44,7 +47,7 @@ class Game:
         }        
 
         # Init text
-        self.text = Text()
+        self.text = Text(self.vf)
         
         # Init variables
         self.dt = 0  # Time between frames in seconds, unset
