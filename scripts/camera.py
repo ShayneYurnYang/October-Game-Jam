@@ -9,10 +9,10 @@ class Camera:
     def scroll(self, surface, bg, player_pos = (0, 0)):
         if (player_pos[0] >= self.left_bound and player_pos[0] <= self.right_bound):
             surface.blit(bg, (-player_pos[0], 0))
-            print('in bounds: ' + str(player_pos[0]))
+            # print('in bounds: ' + str(player_pos[0]))
         elif (player_pos[0] < self.left_bound):
             surface.blit(bg, (self.left_bound, 0))
-            print('left bound: ' + str(player_pos[0]))
+            # print('left bound: ' + str(player_pos[0]))
         elif (player_pos[0] > self.right_bound):
             surface.blit(bg, (-(self.right_bound), 0))
-            print('right bound: ' + str(player_pos[0]))
+            # print('right bound: ' + str(player_pos[0]))

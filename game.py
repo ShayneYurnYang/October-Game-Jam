@@ -2,6 +2,7 @@ import pygame
 import sys
 import constants
 from scripts.entities import Entities
+from scripts.entities import NPC
 from scripts.camera import Camera
 from scripts.text import Text
 from scripts.utils import load_img
@@ -38,7 +39,8 @@ class Game:
         # Init player
         self.player = Entities(self, 'player', 0, self.bg.get_width()-constants.SCREEN_WIDTH, (0, constants.SCREEN_HEIGHT/2), (50, 75))
         self.assets = {
-            'player': load_img('entities/player/player.png')
+            'player': load_img('entities/player/player.png'),
+            'playerStep': load_img('entities/player/playerStep.png')
         }        
 
         # Init text
@@ -65,7 +67,7 @@ class Game:
             self.screen.fill((30, 182, 248))
 
             # Update player position
-            self.player.update((((self.mvmt[1] - self.mvmt[0])*constants.PLAYER_VELOCITY*self.dt), 0))
+            self.player.update([((self.mvmt[1] - self.mvmt[0])*constants.PLAYER_VELOCITY*self.dt), 0])
 
             # Put background
             self.cam.scroll(self.screen, self.bg, self.player.get_pos())
