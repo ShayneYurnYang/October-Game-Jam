@@ -21,16 +21,18 @@ class Entities:
     def update(self, mvmt = [0, 0]):
         # Movement per frame
         frame_mvmt = (mvmt[0] + self.vel[0], mvmt[1] + self.vel[1])
+        
+        # animation
         self.mvmt[0] = True if mvmt[0] < 0 else False if mvmt[0] > 0 else self.mvmt[0]
         if mvmt[0] != 0:
             self.mvmt[1] += abs(mvmt[0])
             if self.mvmt[1] > 75:
                 self.mvmt[1] = 0
                 self.mvmt[2] = 'playerStep' if self.mvmt[2] == 'player' else 'player'
-                print(self.game.assets)
         else:
             self.mvmt[1] = 0
             self.mvmt[2] = 'player'
+            
         # Change position
         self.pos[0] += frame_mvmt[0]
         self.pos[1] += frame_mvmt[1]
